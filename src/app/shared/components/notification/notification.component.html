@@ -1,0 +1,19 @@
+<div matSnackBarLabel
+  class="flex items-center justify-between"
+>
+  <div class="flex items-center w-full">
+    <mat-icon class="mr-2">{{
+      data.type === "success" ? "check_circle" : "error"
+    }}</mat-icon>
+
+    <span class="text-sm font-medium">{{ data.message }}</span>
+  </div>
+
+  <button
+    mat-icon-button
+    (click)="snackBarRef.dismiss()"
+    class="text-white hover:bg-opacity-80"
+  >
+    <mat-icon>close</mat-icon>
+  </button>
+</div>

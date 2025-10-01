@@ -22,6 +22,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { TasksService } from '../../../../core/services/tasks.service';
 import { ITask } from '../../../../core/interfaces/task.interface';
+import { NotificationService } from '../../../../core/services/notification.service';
 
 @Component({
   selector: 'app-create-task',
@@ -50,6 +51,7 @@ export class CreateTaskComponent {
   private fb = inject(FormBuilder);
   public dialogRef = inject(MatDialogRef<CreateTaskComponent>);
   private tasksService = inject(TasksService);
+  private notificationService = inject(NotificationService);
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
     this.noteForm = this.fb.group({
@@ -68,7 +70,11 @@ export class CreateTaskComponent {
         : this.tasksService.createTask({ title, description })
       ).subscribe({
         next: (data) => {
-          // this.isLoading.set(false);
+          this.notificationService.showSuccess(
+            this.noteForm.get('id')?.value
+              ? 'Tarea actualizada exitosamente.'
+              : 'Tarea creada exitosamente.'
+          );
           this.dialogRef.close(data);
         },
         error: (err) => {

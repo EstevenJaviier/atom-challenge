@@ -19,6 +19,7 @@ import { FormDatePipe } from '../../core/pipes/formDate.pipe';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../shared/components/dialogs/confirm-dialog/confirm-dialog.component';
 import { CreateTaskComponent } from './components/create-task/create-task.component';
+import { NotificationService } from '../../core/services/notification.service';
 
 @Component({
   selector: 'app-root',
@@ -48,6 +49,7 @@ export class TasksComponent implements OnInit {
   private router = inject(Router);
   private taskService = inject(TasksService);
   readonly dialog = inject(MatDialog);
+  private notificationService = inject(NotificationService);
 
   ngOnInit(): void {
     this.getTasks();
@@ -78,16 +80,10 @@ export class TasksComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: any) => {
       if (result) {
-        // this.taskList.set([
-        //   result,
-        //   ...(this.taskList()?.filter((dta) => dta.id !== result.id) ?? []),
-        // ]);
         this.getTasks();
       }
     });
   }
-
-  tasks() {}
 
   logout() {
     localStorage.removeItem('token');
@@ -95,23 +91,21 @@ export class TasksComponent implements OnInit {
   }
 
   toggleCompletion(task: ITask) {
+    const updatedTask = { ...task, isCompleted: !task.isCompleted };
     task.isCompleted = !task.isCompleted;
-    const updatedTask = { ...task, completed: !task.isCompleted };
 
     this.taskService.updateTask(task.id ?? '', updatedTask).subscribe({
       next: (data) => {
-        this.isLoading.set(false);
-
-        // this.getTasks();
+        this.notificationService.showSuccess(
+          'Estado actualizado exitosamente.'
+        );
       },
       error: (err) => {
-        this.isLoading.set(false);
+        this.notificationService.showSuccess('Ha ocurido un error inesperado.');
         task.isCompleted = !task.isCompleted;
       },
     });
   }
-
-  editTask(id: string) {}
 
   deleteTask(task: ITask) {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {
@@ -130,10 +124,10 @@ export class TasksComponent implements OnInit {
             this.taskList.update((tasks) =>
               (tasks ?? []).filter((data) => data.id !== task.id)
             );
+            this.notificationService.showError('Tarea eliminada exitosamnte.');
           },
           error: (err) => {
             this.isLoading.set(false);
-            task.isCompleted = !task.isCompleted;
           },
         });
       }
