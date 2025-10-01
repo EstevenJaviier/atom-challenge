@@ -1,0 +1,11 @@
+:host {
+      display: block;
+      /* Define variables para que los componentes Material usen los colores de Tailwind */
+      --mdc-theme-primary: theme('colors.blue.600');
+      --mdc-theme-accent: theme('colors.green.500');
+    }
+
+    /* Estilos para asegurar que el contenido se vea bien en todos los tamaños */
+    .mat-toolbar-row, .mat-toolbar-single-row {
+        padding: 0 16px; /* Ajuste de padding para la barra */
+    }

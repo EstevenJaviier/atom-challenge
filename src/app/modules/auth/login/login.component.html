@@ -1,0 +1,46 @@
+<div class="flex items-center justify-center min-h-screen bg-gray-100 p-4">
+  <mat-card class="w-full max-w-md rounded-xl shadow-2xl p-8">
+    <div class="text-center mb-6">
+      <mat-icon class="text-blue-600 text-6xl block mx-auto"
+        >assignment_turned_in</mat-icon
+      >
+      <h1 class="text-3xl font-bold text-gray-800 mt-2">Bienvenido</h1>
+      <p class="text-gray-500">Inicia sesión para acceder a tus notas.</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="submitLogin()">
+      <mat-form-field class="w-full mb-4">
+        <mat-label>Correo:</mat-label>
+        <input
+          matInput
+          formControlName="email"
+          type="text"
+          placeholder="Tu correo eléctronico"
+        />
+
+        @if (loginForm.get('email')?.hasError('required') &&
+        loginForm.get('email')?.touched) {
+        <mat-error>El correo es obligatorio.</mat-error>
+        }
+      </mat-form-field>
+
+      @if (isLoading()) {
+      <div class="flex justify-center mb-4">
+        <mat-spinner diameter="30" color="primary"></mat-spinner>
+      </div>
+      } @else {
+      <button
+        mat-flat-button
+        color="primary"
+        type="submit"
+        [disabled]="loginForm.invalid"
+        class="w-full py-3 text-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors rounded-lg"
+      >
+        INICIAR SESIÓN
+      </button>
+      } @if (errorMessage) {
+      <p class="text-red-600 mt-3 text-center">{{ errorMessage }}</p>
+      }
+    </form>
+  </mat-card>
+</div>
