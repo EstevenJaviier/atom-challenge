@@ -41,11 +41,11 @@ import { NotificationService } from '../../../../core/services/notification.serv
 export class CreateTaskComponent {
   @Input() set task(task: ITask | undefined) {
     if (task) {
-      this.noteForm.patchValue(task);
+      this.taskForm.patchValue(task);
     }
   }
 
-  noteForm!: FormGroup;
+  taskForm!: FormGroup;
   isLoading = signal<boolean>(false);
 
   private fb = inject(FormBuilder);
@@ -54,7 +54,7 @@ export class CreateTaskComponent {
   private notificationService = inject(NotificationService);
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any) {
-    this.noteForm = this.fb.group({
+    this.taskForm = this.fb.group({
       id: [null],
       title: [null, [Validators.required]],
       description: [null],
@@ -62,16 +62,16 @@ export class CreateTaskComponent {
   }
 
   onSubmit(): void {
-    if (this.noteForm.valid) {
-      const { id, title, description } = this.noteForm.value;
+    if (this.taskForm.valid) {
+      const { id, title, description } = this.taskForm.value;
       this.isLoading.set(true);
-      (this.noteForm.get('id')?.value
+      (this.taskForm.get('id')?.value
         ? this.tasksService.updateTask(id, { title, description })
         : this.tasksService.createTask({ title, description })
       ).subscribe({
         next: (data) => {
           this.notificationService.showSuccess(
-            this.noteForm.get('id')?.value
+            this.taskForm.get('id')?.value
               ? 'Tarea actualizada exitosamente.'
               : 'Tarea creada exitosamente.'
           );

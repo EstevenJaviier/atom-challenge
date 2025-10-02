@@ -22,6 +22,15 @@
         loginForm.get('email')?.touched) {
         <mat-error>El correo es obligatorio.</mat-error>
         }
+        
+        <mat-error
+          *ngIf="
+            loginForm.get('email')?.hasError('pattern') &&
+            loginForm.get('email')?.touched
+          "
+        >
+          El correo no es válido.
+        </mat-error>
       </mat-form-field>
 
       @if (isLoading()) {

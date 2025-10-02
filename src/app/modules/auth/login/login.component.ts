@@ -22,6 +22,7 @@ import { UsersService } from '../../../core/services/users.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmDialogComponent } from '../../../shared/components/dialogs/confirm-dialog/confirm-dialog.component';
+import { NgIf } from '@angular/common';
 
 @Component({
   selector: 'app-login',
@@ -34,6 +35,7 @@ import { ConfirmDialogComponent } from '../../../shared/components/dialogs/confi
     MatButtonModule,
     MatIconModule,
     MatProgressSpinnerModule,
+    NgIf
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
@@ -53,7 +55,7 @@ export class LoginComponent {
 
   constructor() {
     this.loginForm = this.fb.group({
-      email: [null, Validators.required],
+      email: [null, [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
     });
   }
 
