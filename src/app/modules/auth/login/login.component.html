@@ -5,7 +5,7 @@
         >assignment_turned_in</mat-icon
       >
       <h1 class="text-3xl font-bold text-gray-800 mt-2">Bienvenido</h1>
-      <p class="text-gray-500">Inicia sesión para acceder a tus notas.</p>
+      <p class="text-gray-500">Inicia sesión para acceder a tus tareas.</p>
     </div>
 
     <form [formGroup]="loginForm" (ngSubmit)="submitLogin()">
@@ -22,6 +22,15 @@
         loginForm.get('email')?.touched) {
         <mat-error>El correo es obligatorio.</mat-error>
         }
+        
+        <mat-error
+          *ngIf="
+            loginForm.get('email')?.hasError('pattern') &&
+            loginForm.get('email')?.touched
+          "
+        >
+          El correo no es válido.
+        </mat-error>
       </mat-form-field>
 
       @if (isLoading()) {

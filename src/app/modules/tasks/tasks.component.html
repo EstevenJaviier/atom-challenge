@@ -5,7 +5,7 @@
   class="h-16 shadow-lg bg-blue-600"
 >
 <div class="w-full max-w-4xl mx-auto flex justify-between">
-  <span class="text-xl font-bold ml-4">MIS NOTAS</span>
+  <span class="text-xl font-bold ml-4">MIS TAREAS</span>
   <span class="flex-auto"></span>
   <button mat-flat-button color="accent" (click)="logout()">
     CERRAR SESIÓN
@@ -101,7 +101,7 @@
 
           <div class="flex justify-end pt-2">
             <span class="text-xs text-gray-400">{{
-              task.createdAt | appFormDate
+              task.createdAt | date :'dd/MM/yyyy HH:mm'
             }}</span>
           </div>
         </div>
@@ -113,7 +113,7 @@
       *ngIf="!isLoading() && !taskList()?.length"
     >
       <mat-icon class="text-4xl text-gray-400">assignment</mat-icon>
-      <p class="mt-2">No tienes notas creadas.</p>
+      <p class="mt-2">No tienes tareas creadas.</p>
     </div>
   </div>
 </div>

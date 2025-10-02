@@ -1,7 +1,7 @@
 <h2 mat-dialog-title class="text-2xl font-semibold text-blue-600">
-  {{ noteForm.get("id")!.value ? "Editar tarea" : "Crear tarea" }}
+  {{ taskForm.get("id")!.value ? "Editar tarea" : "Crear tarea" }}
 </h2>
-<form [formGroup]="noteForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="taskForm" (ngSubmit)="onSubmit()">
   <mat-dialog-content class="space-y-4 pt-4">
     <mat-form-field class="w-full">
       <mat-label>Título</mat-label>
@@ -10,8 +10,8 @@
         formControlName="title"
         placeholder="Ej: Pagar facturas"
       />
-      @if (noteForm.get('title')?.hasError('required') &&
-      noteForm.get('title')?.touched) {
+      @if (taskForm.get('title')?.hasError('required') &&
+      taskForm.get('title')?.touched) {
       <mat-error>El título es obligatorio.</mat-error>
       }
     </mat-form-field>
@@ -36,12 +36,12 @@
       mat-flat-button
       color="primary"
       type="submit"
-      [disabled]="noteForm.invalid"
+      [disabled]="taskForm.invalid"
     >
       {{
         isLoading()
           ? "Cargando..."
-          : noteForm.get("id")!.value
+          : taskForm.get("id")!.value
           ? "Editar tarea"
           : "Guardar tarea"
       }}

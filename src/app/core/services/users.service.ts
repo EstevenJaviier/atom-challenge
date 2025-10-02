@@ -11,15 +11,15 @@ import { IResponseGlobal } from './response.interface';
 export class UsersService {
   constructor(private http: HttpClient) {}
 
-  findUser(id: number): Observable<IUser> {
+  findUser(id: number): Observable<string> {
     return this.http
-      .get<IUser>(environment.apiBaseUrl + `users/${id}`)
-      .pipe(map((data) => data));
+      .get<{ token: string }>(environment.apiBaseUrl + `users/${id}`)
+      .pipe(map((data) => data.token));
   }
 
-  createUser(user: IUser): Observable<IUser> {
+  createUser(user: IUser): Observable<string> {
     return this.http
-      .post<IResponseGlobal<IUser>>(environment.apiBaseUrl + 'users', user)
-      .pipe(map((data) => data.data));
+      .post<{ token: string }>(environment.apiBaseUrl + 'users', user)
+      .pipe(map((data) => data.token));
   }
 }
