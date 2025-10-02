@@ -67,7 +67,7 @@ export class LoginComponent {
 
     this.usersService.findUser(email).subscribe({
       next: (data) => {
-        localStorage.setItem('token', data.id ?? '');
+        localStorage.setItem('token', data ?? '');
         this.router.navigate(['/tasks']);
       },
       error: (error) => {
@@ -98,7 +98,7 @@ export class LoginComponent {
         this.errorMessage = null;
         this.usersService.createUser({ email }).subscribe({
           next: (data) => {
-            localStorage.setItem('token', data.id ?? '');
+            localStorage.setItem('token', data ?? '');
             this.router.navigate(['/tasks']);
           },
           error: (err) => {

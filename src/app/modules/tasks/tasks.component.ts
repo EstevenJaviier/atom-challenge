@@ -1,31 +1,29 @@
+import { DatePipe, NgFor, NgIf } from '@angular/common';
 import {
-  Component,
-  signal,
   ChangeDetectionStrategy,
+  Component,
   OnInit,
   inject,
+  signal,
 } from '@angular/core';
-import { Router, RouterOutlet } from '@angular/router';
-import { ITask } from '../../core/interfaces/task.interface';
-import { MatCardModule } from '@angular/material/card';
-import { MatListModule } from '@angular/material/list';
-import { MatToolbarModule } from '@angular/material/toolbar';
-import { MatIconModule } from '@angular/material/icon';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { DatePipe, NgFor, NgIf } from '@angular/common';
-import { TasksService } from '../../core/services/tasks.service';
 import { MatButtonModule } from '@angular/material/button';
-import { FormDatePipe } from '../../core/pipes/formDate.pipe';
+import { MatCardModule } from '@angular/material/card';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatIconModule } from '@angular/material/icon';
+import { MatListModule } from '@angular/material/list';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { Router } from '@angular/router';
+import { ITask } from '../../core/interfaces/task.interface';
+import { NotificationService } from '../../core/services/notification.service';
+import { TasksService } from '../../core/services/tasks.service';
 import { ConfirmDialogComponent } from '../../shared/components/dialogs/confirm-dialog/confirm-dialog.component';
 import { CreateTaskComponent } from './components/create-task/create-task.component';
-import { NotificationService } from '../../core/services/notification.service';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
-    RouterOutlet,
     MatCardModule,
     MatListModule,
     DatePipe,
@@ -34,7 +32,6 @@ import { NotificationService } from '../../core/services/notification.service';
     MatToolbarModule,
     MatIconModule,
     MatButtonModule,
-    FormDatePipe,
     MatProgressSpinnerModule,
     MatDialogModule,
   ],
