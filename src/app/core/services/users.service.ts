@@ -11,9 +11,9 @@ import { IResponseGlobal } from './response.interface';
 export class UsersService {
   constructor(private http: HttpClient) {}
 
-  findUser(id: number): Observable<string> {
+  findUser(email: string): Observable<string> {
     return this.http
-      .get<{ token: string }>(environment.apiBaseUrl + `users/${id}`)
+      .get<{ token: string }>(environment.apiBaseUrl + `users/${email}`)
       .pipe(map((data) => data.token));
   }
 
