@@ -35,7 +35,7 @@ import { NgIf } from '@angular/common';
     MatButtonModule,
     MatIconModule,
     MatProgressSpinnerModule,
-    NgIf
+    NgIf,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
@@ -55,7 +55,15 @@ export class LoginComponent {
 
   constructor() {
     this.loginForm = this.fb.group({
-      email: [null, [Validators.required, Validators.pattern(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/)]],
+      email: [
+        null,
+        [
+          Validators.required,
+          Validators.pattern(
+            /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+          ),
+        ],
+      ],
     });
   }
 
@@ -67,7 +75,7 @@ export class LoginComponent {
 
     const { email } = this.loginForm.value;
 
-    this.usersService.findUser(email).subscribe({
+    this.usersService.findUser(String(email).toLocaleLowerCase()).subscribe({
       next: (data) => {
         localStorage.setItem('token', data ?? '');
         this.router.navigate(['/tasks']);
@@ -98,15 +106,17 @@ export class LoginComponent {
       if (Boolean(result)) {
         this.isLoading.set(true);
         this.errorMessage = null;
-        this.usersService.createUser({ email }).subscribe({
-          next: (data) => {
-            localStorage.setItem('token', data ?? '');
-            this.router.navigate(['/tasks']);
-          },
-          error: (err) => {
-            this.isLoading.set(false);
-          },
-        });
+        this.usersService
+          .createUser({ email: String(email).toLocaleLowerCase() })
+          .subscribe({
+            next: (data) => {
+              localStorage.setItem('token', data ?? '');
+              this.router.navigate(['/tasks']);
+            },
+            error: (err) => {
+              this.isLoading.set(false);
+            },
+          });
       }
     });
   }
